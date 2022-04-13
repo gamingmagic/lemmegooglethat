@@ -1,0 +1,11 @@
+{
+  "slots": [
+    {
+      "id": "ruro",
+      "url": "http://www.ruro.com",
+      "image": "/s/images/ruro.png",
+      "message": "Advanced Software<br />for Modern Laboratories",
+      "expires": "2010-10-04"
+    }
+  ]
+}

@@ -1,0 +1,161 @@
+!!! 1.1
+%html{ "xmlns" => "http://www.w3.org/1999/xhtml", "xml:lang" => "en" }
+  %head
+    %meta{ "http-equiv" => "content-type", "content" => "text/html;charset=UTF-8" }
+    %meta{ "name" => "description", "content" => "For all those people that find it more convenient to bother you with their question rather than google it for themselves." }
+    %meta{ "name" => "keywords",  "content" => "google, search, funny, comedy" }
+    %meta{ "name" => "microid",   "content" => "mailto+http:sha1:359d8b83150288115fa3d70bc929b599ede7fdd4" }
+    %meta{ "name" => "verify-v1", "content" => "I9eu/xLrRL55X1KF8yY5VGBzNQKAzj/Vrne6Cwg4Eq8=" }
+    %link{ :rel => "icon", :type => "image/x-icon", :href => "favicon.ico" }
+    %link{ :rel => "search", :type => "application/opensearchdescription+xml", :title => "LMGTFY", :href => "lmgtfy.xml" }
+    %title Let me google that for you
+    %script{ :src => "http://ajax.googleapis.com/ajax/libs/jquery/1.3.2/jquery.min.js", :type => "text/javascript" }
+    %script{ :src => "bundle.js?#{File.mtime("bundle.js").to_i}", :type => "text/javascript" }
+    %style{ :rel => "text/css" }
+      - require 'sass'
+      = Sass::Engine.new(open("style.sass").read, :style => :compact).render
+  %body
+    %center
+      .logo
+        %span{ :rel => "localize[pre_logo]" } let me
+        %img#logo{ :src => "http://www.google.com/intl/en_ALL/images/logo.gif" }
+        %span{ :rel => "localize[post_logo]" } that for you
+      %br
+      %br
+      %br
+      %form
+        %input.text{ :type => "text", :size => 55, :title => "Google Search", :value => "" }
+        %br
+        %input#search{ :type => "button", :value => "Google Search", :rel => "localize[search_button]" }
+        %input#lucky{ :type => "button", :value => "I'm Feeling Lucky", :rel => "localize[lucky_button]" }
+
+      #alert{ :style => "display:none; color:#666;" }
+
+      #instructions
+        %div
+          Enable javascript to use LMGTFY.
+
+      #link_placeholder
+      #link
+        %input.link.copyable{ :type => "text", :readonly => true }
+        #link_message
+        #link_buttons
+          %a#copy.link_button{ :href => "#", :rel => "localize[link.copy]" } copy
+          %a#reset.link_button{ :href => "#", :rel => "localize[link.reset]" } reset
+          %a#tiny.link_button{ :href => "#", :rel => "localize[link.shorten]" } tinyurl
+          %a#go.link_button{ :href => "#", :rel => "localize[link.go]" } go
+
+      #sponsor_wrapper
+        %img{ :src => "images/sponsored_by.png" }
+        <!-- Begin -  Site: LMGTFY Zone: Leaderboard -->
+        <script language="javascript"  type="text/javascript"><!--
+        if (!window.location.search.match(/q=/)) document.write('<s'+'cript lang' + 'uage="jav' + 'ascript" src="http://please-support.lmgtfy.com/a.aspx?ZoneID=1&amp;Task=Get&amp;IFR=False&amp;PageID=8273&amp;SiteID=2&amp;Random=' + (new Date()).getTime() + '"></'+'scr'+'ipt>');
+        // -->
+        </script>
+        <noscript>
+        <a href="http://please-support.lmgtfy.com/a.aspx?ZoneID=1&amp;Task=Click&amp;Mode=HTML&amp;SiteID=2&amp;PageID=8273" target="_blank">
+        <img src="http://please-support.lmgtfy.com/a.aspx?ZoneID=1&amp;Task=Get&amp;Mode=HTML&amp;SiteID=2&amp;PageID=8273" width="728" height="90" border="0"  alt="">
+        </a>
+        </noscript>
+        <!-- End -  Site: LMGTFY Zone: Leaderboard -->
+
+    #footer
+      %a.about{ :href => "#", :name => "about", :rel => "localize[about]" } About
+      %a{ :rel => "localize[privacy]", :href => "privacy.html" } Privacy
+      %a{ :href => "http://twitter.com/lmgtfy" } @LMGTFY
+      %a{ :rel => "localize[live]", :href => "http://live.lmgtfy.com" } Live Stream
+      %a{ :rel => "localize[contact]", :href => "&#109;&#97;&#105;&#108;&#116;&#111;&#58;%73%74%61%66%66@%6c%6d%67%74%66%79.%63%6f%6d?body=Jim%20and%20Ryan%20are%20awesome%21&amp;subject=I%20love%20LMGTFY%21" } Contact
+      %a{ :rel => "localize[advertise]", :href => "http://please-support.lmgtfy.com/a.aspx?ZoneID=0&BannerID=5&AdvertiserID=3&CampaignID=5&Task=Click&SiteID=2&RandomNumber=555397" } Advertising Info
+
+    #about{ :style => "display: none" }
+      %p{ :rel => "localize[pitch]" }         This is for all those people that find it more convenient to bother you with their question rather than google it for themselves.
+      %p{ :rel => "localize[credit]" }        Created by @coderifous and @rmm5t.
+      %p{ :rel => "localize[genesis]" }       Inspired during a lunch conversation with @coderifous, @tmassing, @rmm5t, @EricStratton, and @methodvon.
+      %p{ :rel => "localize[translated_by]" }
+
+
+    :ruby
+      def options_from_hash(hash)
+        hash.sort { |a, b| a[1] <=> b[1] }.each do |k, v|
+          haml_concat "<option value=\"#{k}\">#{v}</option>"
+        end
+      end
+
+    #language
+      %select
+        %option{ :value => "" } LMGTFY Worldwide
+        :ruby
+          options_from_hash(
+            "af"    => "Afrikaans",
+            "ar"    => "Arabic",
+            "be"    => "Belarusian",
+            "bg"    => "Bulgarian",
+            "bs"    => "Bosnian",
+            "ca"    => "Catalan",
+            "cs"    => "Czech",
+            "cy"    => "Welsh",
+            "da"    => "Danish",
+            "de"    => "German",
+            "el"    => "Greek",
+            "en"    => "English",
+            "eo"    => "Esperanto",
+            "es"    => "Spanish",
+            "et"    => "Estonian",
+            "fa"    => "Persian",
+            "fi"    => "Finnish",
+            "fr"    => "French",
+            "he"    => "Hebrew",
+            "hi"    => "Hindi",
+            "hr"    => "Croatian",
+            "hu"    => "Hungarian",
+            "id"    => "Indonesian",
+            "it"    => "Italian",
+            "ja"    => "Japanese",
+            "ka"    => "Georgian",
+            "klingon" => "Klingon",
+            "ko"    => "Korean",
+            "lt"    => "Lithuanian",
+            "lv"    => "Latvian",
+            "mk"    => "Macedonian",
+            "mn"    => "Mongolian",
+            "ms"    => "Malay",
+            "nl"    => "Dutch",
+            "no"    => "Norwegian",
+            "pl"    => "Polish",
+            "pt"    => "Portuguese",
+            "pt-BR" => "Portuguese (Brazil)",
+            "ro"    => "Romanian",
+            "rs"    => "Serbian",
+            "ru"    => "Russian",
+            "sl"    => "Slovene",
+            "sk"    => "Slovak",
+            "sv"    => "Swedish",
+            "th"    => "Thai",
+            "tl"    => "Tagalog",
+            "tr"    => "Turkish",
+            "uk"    => "Ukrainian",
+            "ur"    => "Urdu",
+            "zh"    => "Chinese",
+            "zh-HK" => "Chinese (Hong Kong)",
+            "zh-TW" => "Chinese (Taiwan)"
+          )
+
+    #copyright
+      &copy; LMGTFY, 2009
+      ==|
+      %span{ :rel => "localize[google_owns_google]" } GOOGLE is a trademark of Google Inc.
+      ==|
+      %span{ :rel => "localize[disclaimer]" }         Not associated with Google&trade; in any way.
+
+    %img#fake_mouse{ :src => "images/mouse_arrow.png", :style => "display: none" }
+
+    :plain
+      <script type="text/javascript">
+      var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
+      document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
+      </script>
+      <script type="text/javascript">
+      try {
+      var pageTracker = _gat._getTracker("UA-6370983-1");
+      pageTracker._trackPageview();
+      } catch(err) {}</script>
